@@ -10,7 +10,8 @@ def test_filter_by_state(get_operation_list):
 
     assert filter_by_state(get_operation_list, 'CANCELED') == [
         {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
+        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+        {'id': 615064592, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
     ]
     assert filter_by_state(get_operation_list, 'ERROR') == "State not found"
 
