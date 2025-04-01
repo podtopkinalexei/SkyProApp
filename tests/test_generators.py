@@ -1,4 +1,5 @@
 import pytest
+
 from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 
 
@@ -54,20 +55,26 @@ def test_transaction_descriptions(get_list_transaction):
         next(generator)
 
 
-def test_card_number_generator():
-    generator = card_number_generator(12345, 12347)
-    assert next(generator) == "0000 0000 0001 2345"
-    assert next(generator) == "0000 0000 0001 2346"
-    assert next(generator) == "0000 0000 0001 2347"
+@pytest.mark.parametrize(
+    "start, end, expected",
+    [
 
+        (12345, 12347, ["0000 0000 0001 2345", "0000 0000 0001 2346", "0000 0000 0001 2347"]),
+        (1, 3, ["0000 0000 0000 0001", "0000 0000 0000 0002", "0000 0000 0000 0003"]),
+        (9999999999999998, 9999999999999999, ["9999 9999 9999 9998", "9999 9999 9999 9999"]),
+        (-1, 5, None),
+        (5, 2, None),
+        (9999999999999999 + 1, 9999999999999999 + 2, None),
+    ],
+)
+def test_card_number_generator(start, end, expected):
+    generator = card_number_generator(start, end)
 
-def test_card_number_generator():
-    generator = card_number_generator(-1, 5)
-    with pytest.raises(StopIteration):
-        next(generator)
-
-
-def test_card_number_generator():
-    generator = card_number_generator(5, 2)
-    with pytest.raises(StopIteration):
-        next(generator)
+    if expected is None:
+        with pytest.raises(StopIteration):
+            next(generator)
+    else:
+        for expected in expected:
+            assert next(generator) == expected
+        with pytest.raises(StopIteration):
+            next(generator)
