@@ -10,6 +10,7 @@ API_KEY = os.getenv('API_KEY')
 
 
 def get_currency_rate() -> int:
+    """Функция плучает по API курс валют"""
     url = "https://api.apilayer.com/exchangerates_data/latest?symbols=USD%2CEUR&base=RUB"
 
     payload = {}
@@ -21,7 +22,7 @@ def get_currency_rate() -> int:
     status_code = response.status_code
     data = response.json()
 
-    def make_dir(directory_name="..\\exchangerates_data"):
+    def make_dir(directory_name: str = "..\\exchangerates_data"):
         """Функция создает директорию (по умолчанию 'exchangerates_data') для размещения в ней файлов логирования"""
         try:
             os.makedirs(directory_name, exist_ok=True)
