@@ -277,6 +277,17 @@ files = [
 ]
 
 [[package]]
+name = "patch"
+version = "1.16"
+description = "Library to parse and apply unified diffs"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "patch-1.16.zip", hash = "sha256:c62073f356cff054c8ac24496f1a3d7cfa137835c31e9af39a9f5292fd75bd9f"},
+]
+
+[[package]]
 name = "pluggy"
 version = "1.5.0"
 description = "plugin and hook calling mechanisms for python"
@@ -392,4 +403,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13"
-content-hash = "e26001e1326413af8f4e20a120f3ffa43f6ef76731294278ae7fa444ccfc81b0"
+content-hash = "25ae94fa9ca37370d2576c205a465273dfac2732a9040797794163d7e0047316"
