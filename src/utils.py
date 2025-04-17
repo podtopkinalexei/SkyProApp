@@ -1,57 +1,73 @@
 import json
 import os
-from typing import List, Dict, Any
+from typing import Any, Dict, List, Union
 
-from external_api import get_currency_rate
+from src.external_api import get_currency_rate
 
+# Загружаем курсы валют
 get_currency_rate()
-filename = "..//exchangerates_data/currency_USD_EUR.json"
 
-def get_path_to_json(directory: str = "..\\data", filename: str = "operations.json") -> List[Dict[str, Any]]:
-    """Функция, которая принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
+# Расположение файла с курсами валют
+directory_currency = "..//exchangerates_data"
+filename_currency = "currency_USD_EUR.json"
 
-    full_path = os.path.join(directory, filename)
-    try:
-        with open(full_path, "r", encoding="utf-8") as file:
-            return json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError) as e:
-        return []
+# Расположение файла с операциями
+directory_operations = "..//data"
+filename_operation = "operations.json"
 
 
-def load_json(file_name: str) -> list[Any] | Any:
-    """Функция загрузки данных из .json файла"""
+def get_sum_amount(directory: str = "..//data", filename: str = "operations.json") -> float:
+    """Функция, которая принимает на вход путь к файлу с транзакциями и возвращает сумму всех транзакций в рублях"""
 
-    try:
-        with open(file_name, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return data
-    except (FileNotFoundError, json.JSONDecodeError) as e:
-        return []
+    def load_json(directory: str, filename: str) -> Union[List[Dict[str, Any]], Dict[str, Any]]:
+        """Функция загрузки данных из .json файла.
 
+        Возвращает:
+            - список словарей для файла операций
+            - словарь для файла с курсами валют
+            - пустой список в случае ошибки
+        """
+        full_path = os.path.join(directory, filename)
+        try:
+            with open(full_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            return []
 
-def get_sum_amount(dict_transactions: List[Dict[str, Any]]) -> float:
-    """Функция, которая принимает на вход транзакцию и возвращает сумму всех транзакции в рублях"""
+    # Определяем курс валют
+    currency_data: Dict[str, Any] = load_json(directory_currency, filename_currency)
+    if not currency_data or "rates" not in currency_data:
+        raise ValueError("Не удалось загрузить данные о курсах валют")
+    rates_USD: float = currency_data["rates"]["USD"]
+    rates_EUR: float = currency_data["rates"]["EUR"]
 
-    rates_USD = load_json(filename)["rates"]["USD"]
-    rates_EUR = load_json(filename)["rates"]["EUR"]
+    # Осуществляем расчет
+    dict_transactions: List[Dict[str, Any]] = load_json(directory_operations, filename_operation)
+    if not isinstance(dict_transactions, list):
+        raise ValueError("Ожидается список транзакций")
 
-    rub_sum = round(sum(float(transactions["operationAmount"]["amount"]) for transactions in dict_transactions if
-                        "operationAmount" in transactions and transactions["operationAmount"]["currency"][
-                            "code"] == "RUB"), 2)
+    rub_sum: float = round(sum(
+        float(transactions["operationAmount"]["amount"])
+        for transactions in dict_transactions
+        if "operationAmount" in transactions
+        and transactions["operationAmount"]["currency"]["code"] == "RUB"
+    ), 2)
 
-    sum_usd = round(sum(float(transactions["operationAmount"]["amount"]) for transactions in dict_transactions if
-                        "operationAmount" in transactions and transactions["operationAmount"]["currency"][
-                            "code"] == "USD"), 2)
+    sum_usd: float = round(sum(
+        float(transactions["operationAmount"]["amount"])
+        for transactions in dict_transactions
+        if "operationAmount" in transactions
+        and transactions["operationAmount"]["currency"]["code"] == "USD"
+    ), 2)
 
-    sum_eur = round(sum(float(transactions["operationAmount"]["amount"]) for transactions in dict_transactions if
-                        "operationAmount" in transactions and transactions["operationAmount"]["currency"][
-                            "code"] == "EUR"), 2)
+    sum_eur: float = round(sum(
+        float(transactions["operationAmount"]["amount"])
+        for transactions in dict_transactions
+        if "operationAmount" in transactions
+        and transactions["operationAmount"]["currency"]["code"] == "EUR"
+    ), 2)
 
-    total_sum = round(rub_sum + (sum_usd * rates_USD) + (sum_eur * rates_EUR), 2)
+    total_sum: float = round(rub_sum + (sum_usd * rates_USD) + (sum_eur * rates_EUR), 2)
 
     return total_sum
-
-
-#Проверка работы функций
-# print(load_json('../data/operations.json'))
-# print(get_sum_amount(get_path_to_json()))
