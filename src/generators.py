@@ -4,7 +4,8 @@ from typing import Any, Dict, Iterator
 def filter_by_currency(
     transactions: list[Dict[str, Any]], select_currency: str = "USD"
 ) -> Iterator[Dict[str, Any]]:
-    """Функция возвращает итератор, который поочередно выдает транзакции, где валюта операции соответствует заданной."""
+    """Функция возвращает итератор, который поочередно выдает транзакции,
+    где валюта операции соответствует заданной."""
 
     for operation in transactions:
         if (
