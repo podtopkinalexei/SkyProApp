@@ -1,7 +1,8 @@
 import json
-import os
-from typing import List, Dict, Any
 import logging
+import os
+from typing import Any, Dict, List
+
 from make_log_dir import make_dir
 
 make_dir()
@@ -17,9 +18,9 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
 
-
 def get_path_to_json(directory: str = "..\\data", filename: str = "operations.json") -> List[Dict[str, Any]]:
-    """Функция, которая принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
+    """Функция, которая принимает на вход путь до JSON-файла и
+    возвращает список словарей с данными о финансовых транзакциях."""
 
     full_path = os.path.join(directory, filename)
     try:
@@ -68,7 +69,6 @@ def get_sum_amount(dict_transactions: List[Dict[str, Any]]) -> float:
     logger.info("Calculation  was completed successfully")
 
     return total_sum
-
 
 
 # Проверка работы функции
