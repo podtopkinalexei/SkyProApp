@@ -8,10 +8,10 @@ def filter_by_state(
     """Функция возвращает новый список словарей, содержащий только те словари, у которых ключ state
     соответствует указанному значению."""
     if not user_data:
-        return f"State not found"
+        return "State not found"
 
     if not any(list_state.get("state") == state for list_state in user_data):
-        return f"State not found"
+        return "State not found"
 
     filtered_list_state = [
         list_state for list_state in user_data if list_state.get("state") == state
@@ -24,7 +24,7 @@ def sort_by_date(
 ) -> str | list[list[dict[str, str]]]:
     """Функция возвращает новый список, отсортированный по дате."""
     if not data_:
-        return f"There is no data available for filtering"
+        return "There is no data available for filtering"
 
     filtered_list_date = [
         sorted(data_, key=lambda x: datetime.fromisoformat(x["date"]), reverse=reverse)
