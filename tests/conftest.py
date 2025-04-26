@@ -11,6 +11,7 @@ def get_operation_list():
         {"id": 615064592, "state": "CANCELED", "date": "2018-10-14T08:21:30.419128"},
     ]
 
+
 @pytest.fixture
 def get_list_transaction():
     return (
