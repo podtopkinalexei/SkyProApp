@@ -2,7 +2,7 @@ from typing import Any, Dict, Iterator
 
 
 def filter_by_currency(
-    transactions: list[Dict[str, Any]], select_currency: str = "USD"
+    transactions: list[Dict[str, Any]], select_currency: str = "RUB"
 ) -> Iterator[Dict[str, Any]]:
     """Функция возвращает итератор, который поочередно выдает транзакции,
     где валюта операции соответствует заданной."""
