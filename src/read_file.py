@@ -1,7 +1,7 @@
 import csv
 import json
 import os
-from typing import Union, List, Dict
+from typing import Dict, List, Union
 
 import pandas as pd
 
@@ -9,14 +9,13 @@ import pandas as pd
 def read_file(path_to_file: str) -> Union[str, List[Dict]]:
     """Функция чтения данных из файлов формата .csv, .xls, .xlsx, .json"""
 
-
     if not os.path.exists(path_to_file):
         return f"Файл не найден: {path_to_file}"
 
     extension = os.path.splitext(path_to_file)[1].lower()
 
     # Обработка JSON файлов
-    if extension == '.json':
+    if extension == ".json":
         try:
             with open(path_to_file, "r", encoding="utf-8") as file:
                 data = json.load(file)
@@ -29,16 +28,16 @@ def read_file(path_to_file: str) -> Union[str, List[Dict]]:
             return f"Неожиданная ошибка при чтении JSON: {str(e)}"
 
     # Обработка CSV/Excel файлов
-    elif extension in ('.csv', '.xlsx', '.xls'):
+    elif extension in (".csv", ".xlsx", ".xls"):
         try:
-            if extension == '.csv':
+            if extension == ".csv":
                 # Автоопределение разделителя
-                with open(path_to_file, 'r') as fp:
+                with open(path_to_file, "r") as fp:
                     sample = fp.readline()
                     try:
                         delimiter = csv.Sniffer().sniff(sample).delimiter
                     except:
-                        delimiter = ','
+                        delimiter = ","
                     # Возврат указателя в начало строки
                     fp.seek(0)
                 df = pd.read_csv(path_to_file, delimiter=delimiter)
@@ -49,7 +48,7 @@ def read_file(path_to_file: str) -> Union[str, List[Dict]]:
                 return "Файл не содержит данных"
 
             # Конвертируем DataFrame в список словарей
-            return df.to_dict('records')
+            return df.to_dict("records")
 
         except Exception as e:
             return f"Ошибка при чтении {extension.upper()}: {str(e)}"
