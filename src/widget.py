@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 
 
 def mask_account_card(card_number: str) -> list[Any]:

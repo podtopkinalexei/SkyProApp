@@ -1,6 +1,7 @@
 import pytest
 
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+from src.generators import (card_number_generator, filter_by_currency,
+                            transaction_descriptions)
 
 
 def test_filter_by_currency_USD(get_list_transaction, select_currency="USD"):
@@ -36,10 +37,12 @@ def test_filter_by_currency_RUB(get_list_transaction, select_currency="USD"):
     with pytest.raises(StopIteration):
         next(generator)
 
+
 def test_filter_by_currency_RUB(get_list_transaction, select_currency="USD"):
     generator = filter_by_currency([])
     with pytest.raises(StopIteration):
         next(generator)
+
 
 def test_transaction_descriptions(get_list_transaction):
     generator = transaction_descriptions(get_list_transaction)
@@ -48,6 +51,7 @@ def test_transaction_descriptions(get_list_transaction):
     assert next(generator) == "Перевод со счета на счет"
     assert next(generator) == "Перевод с карты на карту"
     assert next(generator) == "Перевод организации"
+
 
 def test_transaction_descriptions(get_list_transaction):
     generator = transaction_descriptions([])
@@ -67,6 +71,8 @@ def test_transaction_descriptions(get_list_transaction):
         (9999999999999999 + 1, 9999999999999999 + 2, None),
     ],
 )
+
+
 def test_card_number_generator(start, end, expected):
     generator = card_number_generator(start, end)
 
