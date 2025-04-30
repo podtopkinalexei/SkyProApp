@@ -21,9 +21,7 @@ def test_filter_by_state(get_operation_list):
 def test_sort_by_date(get_operation_list):
     assert sort_by_date(get_operation_list) == [
         [
-            {   "id": 41428829,
-                "state": "EXECUTED",
-                "date": "2019-07-03T18:35:29.512364"},
+            {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
             {
                 "id": 615064591,
                 "state": "CANCELED",
@@ -69,9 +67,7 @@ def test_sort_by_date(get_operation_list):
                 "state": "CANCELED",
                 "date": "2018-10-14T08:21:33.419441",
             },
-            {   "id": 41428829,
-                "state": "EXECUTED",
-                "date": "2019-07-03T18:35:29.512364"},
+            {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         ]
     ]
 

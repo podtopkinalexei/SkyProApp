@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 
 
 def mask_account_card(card_number: str) -> list[Any]:
@@ -9,7 +10,9 @@ def mask_account_card(card_number: str) -> list[Any]:
     text_data = " ".join([data_ for data_ in card_number.split() if data_.isalpha()])
     number_ = "".join([data_ for data_ in card_number.split() if not data_.isalpha()])
 
-    if (type_data in text_data.lower() or type_data_alt in text_data.lower()) and len(number_) == 20:
+    if (type_data in text_data.lower() or type_data_alt in text_data.lower()) and len(
+        number_
+    ) == 20:
         number_card = f"**{number_[-4:]}"
         return f"{text_data} {number_card}"
 

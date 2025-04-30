@@ -6,17 +6,17 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-API_KEY = os.getenv('API_KEY')
+API_KEY = os.getenv("API_KEY")
 
 
 def get_currency_rate() -> int:
     """Функция плучает по API курс валют"""
-    url = "https://api.apilayer.com/exchangerates_data/latest?symbols=USD%2CEUR&base=RUB"
+    url = (
+        "https://api.apilayer.com/exchangerates_data/latest?symbols=USD%2CEUR&base=RUB"
+    )
 
     payload = {}
-    headers = {
-        "apikey": API_KEY
-    }
+    headers = {"apikey": API_KEY}
 
     response = requests.request("GET", url, headers=headers, data=payload)
     status_code = response.status_code
