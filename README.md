@@ -306,6 +306,7 @@ result = read_file('data/config.json')
 print(result)
 ```
 
+
 Лицензия: Этот проект распространяется под лицензией MIT. Подробности см. в файле LICENSE.
 
 Автор

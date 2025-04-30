@@ -9,7 +9,8 @@ logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler(default_logs_path_name, mode="w")
 file_handler.setLevel(logging.DEBUG)
 file_formatter = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+)
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 

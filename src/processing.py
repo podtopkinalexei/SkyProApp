@@ -21,12 +21,13 @@ def filter_by_state(
 
 def sort_by_date(
     data_: List[Dict[str, str]], reverse: bool = True
-) -> str | list[list[dict[str, str]]]:
+) -> Union[List[Dict[str, str]], str]:
     """Функция возвращает новый список, отсортированный по дате."""
     if not data_:
         return "There is no data available for filtering"
 
-    filtered_list_date = [
-        sorted(data_, key=lambda x: datetime.fromisoformat(x["date"]), reverse=reverse)
-    ]
+    filtered_list_date = sorted(
+        data_, key=lambda x: datetime.fromisoformat(x["date"]), reverse=reverse
+    )
+
     return filtered_list_date
